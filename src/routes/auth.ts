@@ -1,6 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
 import { isLoggedIn } from "../middleware/isLogged";
+import serviceSignIn from "../resolvers/serviceSignIn";
+import serviceSignUp from "../resolvers/serviceSignUp";
 
 const router = Router();
 
@@ -29,9 +31,10 @@ router.get('/google',
 }));
 
 router.get('/google/callback', passport.authenticate( 'google', {
-   successRedirect: '/auth/login/success',
-   failureRedirect: '/auth/login/failed'
-}));
+  assignProperty: 'body',
+  successRedirect: '/auth/login/success',
+  failureRedirect: '/auth/login/failed'
+}), serviceSignIn);
 
 router.get('/facebook',
   passport.authenticate('facebook'));
@@ -39,6 +42,14 @@ router.get('/facebook',
 router.get('/facebook/callback', passport.authenticate( 'facebook', {
    successRedirect: '/auth/login/success',
    failureRedirect: '/auth/login/failed'
+}));
+
+router.get('/twitter',
+  passport.authenticate('twitter'));
+
+router.get('/twitter/callback', passport.authenticate( 'twitter', {
+   successRedirect: '/oauth/login/success',
+   failureRedirect: '/oauth/login/failed'
 }));
 
 export { router };
