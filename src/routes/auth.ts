@@ -33,4 +33,12 @@ router.get('/google/callback', passport.authenticate( 'google', {
    failureRedirect: '/auth/login/failed'
 }));
 
+router.get('/facebook',
+  passport.authenticate('facebook'));
+
+router.get('/facebook/callback', passport.authenticate( 'facebook', {
+   successRedirect: '/auth/login/success',
+   failureRedirect: '/auth/login/failed'
+}));
+
 export { router };

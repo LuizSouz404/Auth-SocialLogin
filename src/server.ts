@@ -4,7 +4,8 @@ import passport from 'passport';
 import { PrismaClient } from '@prisma/client';
 import {router as authRoute} from './routes/auth';
 
-import './auth/passport';
+import './auth/googleAuth';
+import './auth/facebookAuth';
 
 const port = process.env.PORT;
 const app = express();
@@ -18,7 +19,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (request, response) => {
-  response.send('<a href="/auth/google">Authenticate with Google</a>');
+  response.send('<a href="/auth/google">Authenticate with Google</a><br><a href="/auth/facebook">Authenticate with Facebook</a>');
 })
 
 app.use('/auth', authRoute);
